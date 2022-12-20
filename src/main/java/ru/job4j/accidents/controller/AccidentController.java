@@ -33,8 +33,8 @@ public class AccidentController {
         return "redirect:/accidents";
     }
 
-    @GetMapping("/accidents/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model) {
+    @GetMapping("/accidents/edit")
+    public String edit(@RequestParam("id") int id, Model model) {
         Optional<Accident> accident = accidentService.findById(id);
         if (accident.isEmpty()) {
             return "redirect:/accidents";
