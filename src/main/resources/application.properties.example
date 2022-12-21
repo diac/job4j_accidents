@@ -2,3 +2,7 @@ spring.mvc.hiddenmethod.filter.enabled=true
 spring.mandatory-file-encoding=UTF-8
 spring.http.encoding.charset=UTF-8
 spring.http.encoding.enabled=true
+jdbc.url=jdbc:postgresql://hostname:port/db_name
+jdbc.username=db_username
+jdbc.password=db_password
+jdbc.driver=org.postgresql.Driver

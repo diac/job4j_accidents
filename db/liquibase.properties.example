@@ -1,0 +1,4 @@
+changeLogFile: db/master.xml
+url: jdbc:postgresql://hostname:port/db_name
+username: db_username
+password: db_password
