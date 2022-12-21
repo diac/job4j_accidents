@@ -3,8 +3,9 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.repository.AccidentHibernateRepository;
+import ru.job4j.accidents.repository.AccidentSpringRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,35 +13,43 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SimpleAccidentService implements AccidentService {
 
-    private AccidentHibernateRepository accidentRepository;
+    private final AccidentSpringRepository accidentSpringRepository;
 
     @Override
     public List<Accident> findAll() {
-        return accidentRepository.findAll();
+        List<Accident> accidents = new ArrayList<>();
+        accidentSpringRepository.findAll()
+                .forEach(accidents::add);
+        return accidents;
     }
 
     @Override
     public Optional<Accident> findById(int id) {
-        return accidentRepository.findById(id);
+        return accidentSpringRepository.findById(id);
     }
 
     @Override
     public Optional<Accident> add(Accident accident) {
-        return accidentRepository.add(accident);
+        return Optional.of(accidentSpringRepository.save(accident));
     }
 
     @Override
     public boolean update(Accident accident) {
-        return accidentRepository.update(accident);
+        Accident saved = accidentSpringRepository.save(accident);
+        return accident.equals(saved);
     }
 
     @Override
     public boolean delete(Accident accident) {
-        return accidentRepository.delete(accident);
+        accidentSpringRepository.delete(accident);
+        return !accidentSpringRepository.existsById(accident.getId());
     }
 
     @Override
     public boolean delete(int id) {
-        return accidentRepository.delete(id);
+        Accident accident = new Accident();
+        accident.setId(id);
+        accidentSpringRepository.delete(accident);
+        return !accidentSpringRepository.existsById(id);
     }
 }
