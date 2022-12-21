@@ -3,5 +3,5 @@ CREATE TABLE accident (
   name TEXT,
   text TEXT,
   address TEXT,
-  type INTEGER
+  type_id INTEGER
 );
