@@ -46,7 +46,7 @@ public class AccidentMemRepository implements AccidentRepository {
     @Override
     public boolean update(Accident accident) {
         Accident accidentInStore = store.replace(accident.getId(), accident);
-        return accidentInStore.equals(accident);
+        return accident.equals(accidentInStore);
     }
 
     @Override
