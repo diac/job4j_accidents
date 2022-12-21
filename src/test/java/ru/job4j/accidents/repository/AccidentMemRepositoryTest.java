@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -24,7 +25,7 @@ public class AccidentMemRepositoryTest {
     @Test
     public void whenCreate() {
         String value = String.valueOf(System.currentTimeMillis());
-        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value));
+        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
         accidentRepository.add(accident);
         Accident accidentInRepository = accidentRepository.findById(accident.getId())
                 .orElse(new Accident());
@@ -34,7 +35,7 @@ public class AccidentMemRepositoryTest {
     @Test
     public void whenFindAll() {
         String value = String.valueOf(System.currentTimeMillis());
-        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value));
+        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
         accidentRepository.add(accident);
         List<Accident> accidents = accidentRepository.findAll();
         assertThat(accidents.contains(accident)).isTrue();
@@ -43,7 +44,7 @@ public class AccidentMemRepositoryTest {
     @Test
     public void whenUpdate() {
         String value = String.valueOf(System.currentTimeMillis());
-        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value));
+        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
         accidentRepository.add(accident);
         accident.setName(accident.getName() + "_updated");
         boolean success = accidentRepository.update(accident);
@@ -57,7 +58,7 @@ public class AccidentMemRepositoryTest {
     @Test
     public void whenDelete() {
         String value = String.valueOf(System.currentTimeMillis());
-        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value));
+        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
         accidentRepository.add(accident);
         int accidentId = accident.getId();
         boolean success = accidentRepository.delete(accident);
@@ -69,7 +70,7 @@ public class AccidentMemRepositoryTest {
     @Test
     public void whenById() {
         String value = String.valueOf(System.currentTimeMillis());
-        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value));
+        Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
         accidentRepository.add(accident);
         int accidentId = accident.getId();
         boolean success = accidentRepository.delete(accidentId);
