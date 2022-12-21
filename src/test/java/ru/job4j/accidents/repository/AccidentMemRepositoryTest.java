@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 public class AccidentMemRepositoryTest {
 
     @Autowired
-    AccidentRepository accidentRepository;
+    private AccidentRepository accidentRepository;
 
     @Test
     public void whenCreate() {
