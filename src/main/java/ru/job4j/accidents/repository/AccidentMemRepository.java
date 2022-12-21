@@ -2,7 +2,9 @@ package ru.job4j.accidents.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.model.AccidentType;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +19,11 @@ public class AccidentMemRepository implements AccidentRepository {
 
     public AccidentMemRepository() {
         this.autoIncrement = new AtomicInteger();
+        for (int i = 1; i <= 5; i++) {
+            String name = "Нарушение №" + i;
+            String address = "Адрес №" + i;
+            add(new Accident(0, name, name, address, new AccidentType(), new HashSet<>()));
+        }
     }
 
     @Override
