@@ -52,7 +52,7 @@ public class AccidentMemRepository implements AccidentRepository {
     @Override
     public boolean delete(Accident accident) {
         Accident accidentInStore = store.remove(accident.getId());
-        return accidentInStore.equals(accident);
+        return accident.equals(accidentInStore);
     }
 
     @Override
