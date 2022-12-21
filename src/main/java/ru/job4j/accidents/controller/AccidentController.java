@@ -9,6 +9,7 @@ import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.service.AccidentService;
 import ru.job4j.accidents.service.AccidentTypeService;
+import ru.job4j.accidents.service.RuleService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -20,6 +21,7 @@ public class AccidentController {
 
     private AccidentService accidentService;
     private AccidentTypeService accidentTypeService;
+    private RuleService ruleService;
 
     @GetMapping("/accidents")
     public String index(Model model) {
@@ -31,12 +33,7 @@ public class AccidentController {
     @GetMapping("/addAccident")
     public String create(Model model) {
         model.addAttribute("types", accidentTypeService.findAll());
-        List<Rule> rules = List.of(
-                new Rule(1, "Статья. 1"),
-                new Rule(2, "Статья. 2"),
-                new Rule(3, "Статья. 3")
-        );
-        model.addAttribute("rules", rules);
+        model.addAttribute("rules", ruleService.findAll());
         return "createAccident";
     }
 
@@ -65,12 +62,7 @@ public class AccidentController {
         }
         model.addAttribute("accident", accident.get());
         model.addAttribute("types", accidentTypeService.findAll());
-        List<Rule> rules = List.of(
-                new Rule(1, "Статья. 1"),
-                new Rule(2, "Статья. 2"),
-                new Rule(3, "Статья. 3")
-        );
-        model.addAttribute("rules", rules);
+        model.addAttribute("rules", ruleService.findAll());
         return "editAccident";
     }
 
