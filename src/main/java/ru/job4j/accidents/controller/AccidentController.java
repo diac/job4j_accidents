@@ -8,6 +8,7 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.service.AccidentService;
+import ru.job4j.accidents.service.AccidentTypeService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class AccidentController {
 
     private AccidentService accidentService;
+    private AccidentTypeService accidentTypeService;
 
     @GetMapping("/accidents")
     public String index(Model model) {
@@ -28,11 +30,7 @@ public class AccidentController {
 
     @GetMapping("/addAccident")
     public String create(Model model) {
-        List<AccidentType> types = new ArrayList<>();
-        types.add(new AccidentType(1, "Две машины"));
-        types.add(new AccidentType(2, "Машина и человек"));
-        types.add(new AccidentType(3, "Машина и велосипед"));
-        model.addAttribute("types", types);
+        model.addAttribute("types", accidentTypeService.findAll());
         List<Rule> rules = List.of(
                 new Rule(1, "Статья. 1"),
                 new Rule(2, "Статья. 2"),
@@ -66,11 +64,7 @@ public class AccidentController {
             return "redirect:/accidents";
         }
         model.addAttribute("accident", accident.get());
-        List<AccidentType> types = new ArrayList<>();
-        types.add(new AccidentType(1, "Две машины"));
-        types.add(new AccidentType(2, "Машина и человек"));
-        types.add(new AccidentType(3, "Машина и велосипед"));
-        model.addAttribute("types", types);
+        model.addAttribute("types", accidentTypeService.findAll());
         List<Rule> rules = List.of(
                 new Rule(1, "Статья. 1"),
                 new Rule(2, "Статья. 2"),
