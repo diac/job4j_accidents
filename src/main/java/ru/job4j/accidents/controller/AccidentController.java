@@ -61,6 +61,12 @@ public class AccidentController {
             return "redirect:/accidents";
         }
         model.addAttribute("accident", accident.get());
+        model.addAttribute(
+                "ruleIds",
+                accident.get().getRules().stream()
+                        .map(rule -> rule.getId())
+                        .toList()
+        );
         model.addAttribute("types", accidentTypeService.findAll());
         model.addAttribute("rules", ruleService.findAll());
         return "editAccident";
@@ -69,9 +75,16 @@ public class AccidentController {
     @PatchMapping("/accidents/{id}")
     public String patch(
             @PathVariable("id") int id,
-            @ModelAttribute("accident") Accident accident
+            @ModelAttribute("accident") Accident accident,
+            HttpServletRequest req
     ) {
         accident.setId(id);
+        String[] ruleIds = Optional.ofNullable(req.getParameterValues("rIds")).orElse(new String[0]);
+        accident.setRules(
+                Arrays.stream(ruleIds)
+                        .map(ruleId -> new Rule(Integer.parseInt(ruleId), null))
+                        .collect(Collectors.toSet())
+        );
         accidentService.update(accident);
         return "redirect:/accidents";
     }

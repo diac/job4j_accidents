@@ -3,9 +3,8 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.repository.AccidentSpringRepository;
+import ru.job4j.accidents.repository.AccidentJdbcTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,43 +12,35 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SimpleAccidentService implements AccidentService {
 
-    private final AccidentSpringRepository accidentSpringRepository;
+    private final AccidentJdbcTemplate accidentJdbcTemplate;
 
     @Override
     public List<Accident> findAll() {
-        List<Accident> accidents = new ArrayList<>();
-        accidentSpringRepository.findAll()
-                .forEach(accidents::add);
-        return accidents;
+        return accidentJdbcTemplate.findAll();
     }
 
     @Override
     public Optional<Accident> findById(int id) {
-        return accidentSpringRepository.findById(id);
+        return accidentJdbcTemplate.findById(id);
     }
 
     @Override
     public Optional<Accident> add(Accident accident) {
-        return Optional.of(accidentSpringRepository.save(accident));
+        return accidentJdbcTemplate.add(accident);
     }
 
     @Override
     public boolean update(Accident accident) {
-        Accident saved = accidentSpringRepository.save(accident);
-        return accident.equals(saved);
+        return accidentJdbcTemplate.update(accident);
     }
 
     @Override
     public boolean delete(Accident accident) {
-        accidentSpringRepository.delete(accident);
-        return !accidentSpringRepository.existsById(accident.getId());
+        return accidentJdbcTemplate.delete(accident);
     }
 
     @Override
     public boolean delete(int id) {
-        Accident accident = new Accident();
-        accident.setId(id);
-        accidentSpringRepository.delete(accident);
-        return !accidentSpringRepository.existsById(id);
+        return accidentJdbcTemplate.delete(id);
     }
 }

@@ -12,6 +12,7 @@
             <th>Текст</th>
             <th>Адрес</th>
             <th>Тип</th>
+            <th>Статьи</th>
             <th></th>
         </tr>
         </thead>
@@ -21,7 +22,14 @@
             <td th:text="${accident.name}"></td>
             <td th:text="${accident.text}"></td>
             <td th:text="${accident.address}"></td>
-            <td></td>
+            <td th:text="${accident.type.name}"></td>
+            <td>
+                <span
+                        th:each="rule : ${accident.rules}"
+                        th:text="${rule.name}"
+                        class="badge bg-primary mx-1"
+                ></span>
+            </td>
             <td>
                 <a th:href="@{|/accidents/edit?id=${accident.id}|}" class="btn btn-primary">Редактировать</a>
             </td>

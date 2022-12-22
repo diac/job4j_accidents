@@ -28,6 +28,11 @@ public class RuleMemRepository implements RuleRepository {
     }
 
     @Override
+    public List<Rule> findAllByAccidentId(int accidentId) {
+        return null;
+    }
+
+    @Override
     public Optional<Rule> findById(int id) {
         return Optional.ofNullable(store.get(id));
     }

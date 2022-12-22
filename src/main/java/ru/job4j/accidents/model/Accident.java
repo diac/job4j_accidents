@@ -26,7 +26,8 @@ public class Accident {
     private String text;
     private String address;
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "type_id")
     private AccidentType type;
 
     @Transient

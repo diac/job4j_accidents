@@ -3,5 +3,5 @@ CREATE TABLE accident (
   name TEXT,
   text TEXT,
   address TEXT,
-  type_id INTEGER
+  type_id INTEGER NOT NULL REFERENCES accident_type(id)
 );

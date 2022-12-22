@@ -9,6 +9,8 @@ public interface RuleRepository {
 
     List<Rule> findAll();
 
+    List<Rule> findAllByAccidentId(int accidentId);
+
     Optional<Rule> findById(int id);
 
     Optional<Rule> add(Rule rule);
