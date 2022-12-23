@@ -3,7 +3,7 @@ package ru.job4j.accidents.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.mapper.AccidentTypeMapper;
 import ru.job4j.accidents.model.AccidentType;
 
 import java.util.List;
@@ -25,16 +25,13 @@ public class AccidentTypeJdbcTemplate implements AccidentTypeRepository {
 
     private final JdbcTemplate jdbc;
 
+    private final AccidentTypeMapper accidentTypeMapper;
+
     @Override
     public List<AccidentType> findAll() {
         return jdbc.query(
                 FIND_ALL_QUERY,
-                (rs, row) -> {
-                    AccidentType accidentType = new AccidentType();
-                    accidentType.setId(rs.getInt("id"));
-                    accidentType.setName(rs.getString("name"));
-                    return accidentType;
-                }
+                accidentTypeMapper
         );
     }
 
@@ -43,12 +40,7 @@ public class AccidentTypeJdbcTemplate implements AccidentTypeRepository {
         return Optional.ofNullable(
                 jdbc.queryForObject(
                         FIND_BY_ID_QUERY,
-                        (rs, row) -> {
-                            AccidentType accidentType = new AccidentType();
-                            accidentType.setId(rs.getInt("id"));
-                            accidentType.setName(rs.getString("name"));
-                            return accidentType;
-                        },
+                        accidentTypeMapper,
                         id
                 )
         );

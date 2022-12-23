@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import ru.job4j.accidents.mapper.AccidentMapper;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.model.AccidentType;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -18,6 +18,8 @@ import java.util.Optional;
 public class AccidentJdbcTemplate implements AccidentRepository {
 
     private final RuleJdbcTemplate ruleJdbcTemplate;
+
+    private final AccidentMapper accidentMapper;
 
     private static final String FIND_ALL_QUERY = """
             SELECT 
@@ -66,45 +68,29 @@ public class AccidentJdbcTemplate implements AccidentRepository {
 
     @Override
     public List<Accident> findAll() {
-        return jdbc.query(
+        List<Accident> accidents = jdbc.query(
                 FIND_ALL_QUERY,
-                (rs, row) -> {
-                    Accident accident = new Accident();
-                    accident.setId(rs.getInt(1));
-                    accident.setName(rs.getString(2));
-                    accident.setText(rs.getString(3));
-                    accident.setAddress(rs.getString(4));
-                    AccidentType accidentType = new AccidentType();
-                    accidentType.setId(rs.getInt(6));
-                    accidentType.setName(rs.getString(7));
-                    accident.setType(accidentType);
-                    accident.setRules(new HashSet<>(ruleJdbcTemplate.findAllByAccidentId(accident.getId())));
-                    return accident;
-                }
+                accidentMapper
         );
+        for (Accident accident : accidents) {
+            accident.setRules(new HashSet<>(ruleJdbcTemplate.findAllByAccidentId(accident.getId())));
+        }
+        return accidents;
     }
 
     @Override
     public Optional<Accident> findById(int id) {
-        return Optional.ofNullable(
+        Optional<Accident> accident = Optional.ofNullable(
                 jdbc.queryForObject(
                         FIND_BY_ID_QUERY,
-                        (rs, row) -> {
-                            Accident accident = new Accident();
-                            accident.setId(rs.getInt(1));
-                            accident.setName(rs.getString(2));
-                            accident.setText(rs.getString(3));
-                            accident.setAddress(rs.getString(4));
-                            AccidentType accidentType = new AccidentType();
-                            accidentType.setId(rs.getInt(6));
-                            accidentType.setName(rs.getString(7));
-                            accident.setType(accidentType);
-                            accident.setRules(new HashSet<>(ruleJdbcTemplate.findAllByAccidentId(accident.getId())));
-                            return accident;
-                        },
+                        accidentMapper,
                         id
                 )
         );
+        if (accident.isPresent()) {
+            accident.get().setRules(new HashSet<>(ruleJdbcTemplate.findAllByAccidentId(accident.get().getId())));
+        }
+        return accident;
     }
 
     @Override

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import ru.job4j.accidents.mapper.RuleMapper;
 import ru.job4j.accidents.model.Rule;
 
 import java.sql.PreparedStatement;
@@ -43,16 +44,13 @@ public class RuleJdbcTemplate implements RuleRepository {
 
     private final JdbcTemplate jdbc;
 
+    private final RuleMapper ruleMapper;
+
     @Override
     public List<Rule> findAll() {
         return jdbc.query(
                 FIND_ALL_QUERY,
-                (rs, row) -> {
-                    Rule rule = new Rule();
-                    rule.setId(rs.getInt("id"));
-                    rule.setName(rs.getString("name"));
-                    return rule;
-                }
+                ruleMapper
         );
     }
 
@@ -60,12 +58,7 @@ public class RuleJdbcTemplate implements RuleRepository {
     public List<Rule> findAllByAccidentId(int accidentId) {
         return jdbc.query(
                 FIND_ALL_BY_ACCIDENT_ID_QUERY,
-                (rs, row) -> {
-                    Rule rule = new Rule();
-                    rule.setId(rs.getInt("id"));
-                    rule.setName(rs.getString("name"));
-                    return rule;
-                },
+                ruleMapper,
                 accidentId
         );
     }
@@ -75,12 +68,7 @@ public class RuleJdbcTemplate implements RuleRepository {
         return Optional.ofNullable(
                 jdbc.queryForObject(
                         FIND_BY_ID_QUERY,
-                        (rs, row) -> {
-                            Rule rule = new Rule();
-                            rule.setId(rs.getInt("id"));
-                            rule.setName(rs.getString("name"));
-                            return rule;
-                        },
+                        ruleMapper,
                         id
                 )
         );
