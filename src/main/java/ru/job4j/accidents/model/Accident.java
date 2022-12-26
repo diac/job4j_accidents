@@ -30,6 +30,11 @@ public class Accident {
     @JoinColumn(name = "type_id")
     private AccidentType type;
 
-    @Transient
+    @ManyToMany
+    @JoinTable(
+            name = "accidents_rules",
+            joinColumns = {@JoinColumn(name = "accident_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rule_id")}
+    )
     private Set<Rule> rules = new HashSet<>();
 }

@@ -3,7 +3,7 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.AccidentType;
-import ru.job4j.accidents.repository.AccidentTypeJdbcTemplate;
+import ru.job4j.accidents.repository.AccidentTypeHibernateRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,35 +12,35 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SimpleAccidentTypeService implements AccidentTypeService {
 
-    private AccidentTypeJdbcTemplate accidentTypeRepository;
+    private AccidentTypeHibernateRepository accidentTypeHibernateRepository;
 
     @Override
     public List<AccidentType> findAll() {
-        return accidentTypeRepository.findAll();
+        return accidentTypeHibernateRepository.findAll();
     }
 
     @Override
     public Optional<AccidentType> findById(int id) {
-        return accidentTypeRepository.findById(id);
+        return accidentTypeHibernateRepository.findById(id);
     }
 
     @Override
     public Optional<AccidentType> add(AccidentType accidentType) {
-        return accidentTypeRepository.add(accidentType);
+        return accidentTypeHibernateRepository.add(accidentType);
     }
 
     @Override
     public boolean update(AccidentType accidentType) {
-        return accidentTypeRepository.update(accidentType);
+        return accidentTypeHibernateRepository.update(accidentType);
     }
 
     @Override
     public boolean delete(AccidentType accidentType) {
-        return accidentTypeRepository.delete(accidentType);
+        return accidentTypeHibernateRepository.delete(accidentType);
     }
 
     @Override
     public boolean delete(int id) {
-        return accidentTypeRepository.delete(id);
+        return accidentTypeHibernateRepository.delete(id);
     }
 }
