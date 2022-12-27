@@ -3,8 +3,9 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.AccidentType;
-import ru.job4j.accidents.repository.AccidentTypeHibernateRepository;
+import ru.job4j.accidents.repository.AccidentTypeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,35 +13,43 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SimpleAccidentTypeService implements AccidentTypeService {
 
-    private AccidentTypeHibernateRepository accidentTypeHibernateRepository;
+    private final AccidentTypeRepository accidentTypeRepository;
 
     @Override
     public List<AccidentType> findAll() {
-        return accidentTypeHibernateRepository.findAll();
+        List<AccidentType> accidentTypes = new ArrayList<>();
+        accidentTypeRepository.findAll()
+                .forEach(accidentTypes::add);
+        return accidentTypes;
     }
 
     @Override
     public Optional<AccidentType> findById(int id) {
-        return accidentTypeHibernateRepository.findById(id);
+        return accidentTypeRepository.findById(id);
     }
 
     @Override
     public Optional<AccidentType> add(AccidentType accidentType) {
-        return accidentTypeHibernateRepository.add(accidentType);
+        return Optional.of(accidentTypeRepository.save(accidentType));
     }
 
     @Override
     public boolean update(AccidentType accidentType) {
-        return accidentTypeHibernateRepository.update(accidentType);
+        AccidentType saved = accidentTypeRepository.save(accidentType);
+        return accidentType.equals(saved);
     }
 
     @Override
     public boolean delete(AccidentType accidentType) {
-        return accidentTypeHibernateRepository.delete(accidentType);
+        accidentTypeRepository.delete(accidentType);
+        return !accidentTypeRepository.existsById(accidentType.getId());
     }
 
     @Override
     public boolean delete(int id) {
-        return accidentTypeHibernateRepository.delete(id);
+        AccidentType accidentType = new AccidentType();
+        accidentType.setId(id);
+        accidentTypeRepository.delete(accidentType);
+        return !accidentTypeRepository.existsById(id);
     }
 }

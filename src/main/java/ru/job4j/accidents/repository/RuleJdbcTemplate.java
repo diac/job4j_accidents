@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class RuleJdbcTemplate implements RuleRepository {
+public class RuleJdbcTemplate implements RuleDefaultRepository {
 
     private static final String FIND_ALL_QUERY = "SELECT * FROM rule;";
 

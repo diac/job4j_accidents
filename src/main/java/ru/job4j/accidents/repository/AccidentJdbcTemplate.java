@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class AccidentJdbcTemplate implements AccidentRepository {
+public class AccidentJdbcTemplate implements AccidentDefaultRepository {
 
     private final RuleJdbcTemplate ruleJdbcTemplate;
 

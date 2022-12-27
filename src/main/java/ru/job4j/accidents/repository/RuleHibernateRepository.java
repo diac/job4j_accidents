@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class RuleHibernateRepository implements RuleRepository {
+public class RuleHibernateRepository implements RuleDefaultRepository {
 
     private static final String FIND_ALL_QUERY = "SELECT r FROM Rule r";
 

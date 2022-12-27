@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
-public class AccidentMemRepository implements AccidentRepository {
+public class AccidentMemRepository implements AccidentDefaultRepository {
 
     private final AtomicInteger autoIncrement;
     private final Map<Integer, Accident> store = new ConcurrentHashMap<>();

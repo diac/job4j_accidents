@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class AccidentTypeHibernateRepository implements AccidentTypeRepository {
+public class AccidentTypeHibernateRepository implements AccidentTypeDefaultRepository {
 
     private static final String FIND_ALL_QUERY = "SELECT at FROM AccidentType at";
 

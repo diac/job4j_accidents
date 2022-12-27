@@ -3,8 +3,9 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.repository.AccidentHibernateRepository;
+import ru.job4j.accidents.repository.AccidentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,35 +13,43 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SimpleAccidentService implements AccidentService {
 
-    private final AccidentHibernateRepository accidentHibernateRepository;
+    private final AccidentRepository accidentRepository;
 
     @Override
     public List<Accident> findAll() {
-        return accidentHibernateRepository.findAll();
+        List<Accident> accidents = new ArrayList<>();
+        accidentRepository.findAll()
+                .forEach(accidents::add);
+        return accidents;
     }
 
     @Override
     public Optional<Accident> findById(int id) {
-        return accidentHibernateRepository.findById(id);
+        return accidentRepository.findById(id);
     }
 
     @Override
     public Optional<Accident> add(Accident accident) {
-        return accidentHibernateRepository.add(accident);
+        return Optional.of(accidentRepository.save(accident));
     }
 
     @Override
     public boolean update(Accident accident) {
-        return accidentHibernateRepository.update(accident);
+        Accident saved = accidentRepository.save(accident);
+        return accident.equals(saved);
     }
 
     @Override
     public boolean delete(Accident accident) {
-        return accidentHibernateRepository.delete(accident);
+        accidentRepository.delete(accident);
+        return !accidentRepository.existsById(accident.getId());
     }
 
     @Override
     public boolean delete(int id) {
-        return accidentHibernateRepository.delete(id);
+        Accident accident = new Accident();
+        accident.setId(id);
+        accidentRepository.delete(accident);
+        return !accidentRepository.existsById(id);
     }
 }

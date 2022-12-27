@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class AccidentTypeJdbcTemplate implements AccidentTypeRepository {
+public class AccidentTypeJdbcTemplate implements AccidentTypeDefaultRepository {
 
     private static final String FIND_ALL_QUERY = "SELECT * FROM accident_type;";
 

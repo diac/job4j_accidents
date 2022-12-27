@@ -18,14 +18,14 @@ import static org.assertj.core.api.Assertions.*;
 public class AccidentTypeMemRepositoryTest {
 
     @Autowired
-    private AccidentTypeRepository accidentTypeRepository;
+    private AccidentTypeDefaultRepository accidentTypeDefaultRepository;
 
     @Test
     public void whenCreate() {
         String value = String.valueOf(System.currentTimeMillis());
         AccidentType accidentType = new AccidentType(0, value);
-        accidentTypeRepository.add(accidentType);
-        AccidentType accidentTypeInRepository = accidentTypeRepository.findById(accidentType.getId())
+        accidentTypeDefaultRepository.add(accidentType);
+        AccidentType accidentTypeInRepository = accidentTypeDefaultRepository.findById(accidentType.getId())
                 .orElse(new AccidentType());
         assertThat(accidentTypeInRepository).isEqualTo(accidentType);
     }
@@ -34,8 +34,8 @@ public class AccidentTypeMemRepositoryTest {
     public void whenFindAll() {
         String value = String.valueOf(System.currentTimeMillis());
         AccidentType accidentType = new AccidentType(0, value);
-        accidentTypeRepository.add(accidentType);
-        List<AccidentType> accidentTypes = accidentTypeRepository.findAll();
+        accidentTypeDefaultRepository.add(accidentType);
+        List<AccidentType> accidentTypes = accidentTypeDefaultRepository.findAll();
         assertThat(accidentTypes.contains(accidentType)).isTrue();
     }
 
@@ -43,10 +43,10 @@ public class AccidentTypeMemRepositoryTest {
     public void whenUpdate() {
         String value = String.valueOf(System.currentTimeMillis());
         AccidentType accidentType = new AccidentType(0, value);
-        accidentTypeRepository.add(accidentType);
+        accidentTypeDefaultRepository.add(accidentType);
         accidentType.setName(accidentType.getName() + "_updated");
-        boolean success = accidentTypeRepository.update(accidentType);
-        AccidentType accidentTypeInRepository = accidentTypeRepository.findById(accidentType.getId())
+        boolean success = accidentTypeDefaultRepository.update(accidentType);
+        AccidentType accidentTypeInRepository = accidentTypeDefaultRepository.findById(accidentType.getId())
                 .orElse(new AccidentType());
         assertThat(success).isTrue();
         assertThat(accidentTypeInRepository).isEqualTo(accidentType);
@@ -57,10 +57,10 @@ public class AccidentTypeMemRepositoryTest {
     public void whenDelete() {
         String value = String.valueOf(System.currentTimeMillis());
         AccidentType accidentType = new AccidentType(0, value);
-        accidentTypeRepository.add(accidentType);
+        accidentTypeDefaultRepository.add(accidentType);
         int accidentTypeId = accidentType.getId();
-        boolean success = accidentTypeRepository.delete(accidentType);
-        Optional<AccidentType> accidentTypeInRepository = accidentTypeRepository.findById(accidentTypeId);
+        boolean success = accidentTypeDefaultRepository.delete(accidentType);
+        Optional<AccidentType> accidentTypeInRepository = accidentTypeDefaultRepository.findById(accidentTypeId);
         assertThat(success).isTrue();
         assertThat(accidentTypeInRepository).isEmpty();
     }
@@ -69,10 +69,10 @@ public class AccidentTypeMemRepositoryTest {
     public void whenDeleteById() {
         String value = String.valueOf(System.currentTimeMillis());
         AccidentType accidentType = new AccidentType(0, value);
-        accidentTypeRepository.add(accidentType);
+        accidentTypeDefaultRepository.add(accidentType);
         int accidentTypeId = accidentType.getId();
-        boolean success = accidentTypeRepository.delete(accidentTypeId);
-        Optional<AccidentType> accidentTypeInRepository = accidentTypeRepository.findById(accidentTypeId);
+        boolean success = accidentTypeDefaultRepository.delete(accidentTypeId);
+        Optional<AccidentType> accidentTypeInRepository = accidentTypeDefaultRepository.findById(accidentTypeId);
         assertThat(success).isTrue();
         assertThat(accidentTypeInRepository).isEmpty();
     }

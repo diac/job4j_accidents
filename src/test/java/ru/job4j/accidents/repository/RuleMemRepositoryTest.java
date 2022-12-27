@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 public class RuleMemRepositoryTest {
 
     @Autowired
-    private RuleRepository ruleRepository;
+    private RuleDefaultRepository ruleRepository;
 
     @Test
     public void whenCreate() {

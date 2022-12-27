@@ -20,14 +20,14 @@ import static org.assertj.core.api.Assertions.*;
 public class AccidentMemRepositoryTest {
 
     @Autowired
-    private AccidentRepository accidentRepository;
+    private AccidentDefaultRepository accidentDefaultRepository;
 
     @Test
     public void whenCreate() {
         String value = String.valueOf(System.currentTimeMillis());
         Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
-        accidentRepository.add(accident);
-        Accident accidentInRepository = accidentRepository.findById(accident.getId())
+        accidentDefaultRepository.add(accident);
+        Accident accidentInRepository = accidentDefaultRepository.findById(accident.getId())
                 .orElse(new Accident());
         assertThat(accidentInRepository).isEqualTo(accident);
     }
@@ -36,8 +36,8 @@ public class AccidentMemRepositoryTest {
     public void whenFindAll() {
         String value = String.valueOf(System.currentTimeMillis());
         Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
-        accidentRepository.add(accident);
-        List<Accident> accidents = accidentRepository.findAll();
+        accidentDefaultRepository.add(accident);
+        List<Accident> accidents = accidentDefaultRepository.findAll();
         assertThat(accidents.contains(accident)).isTrue();
     }
 
@@ -45,10 +45,10 @@ public class AccidentMemRepositoryTest {
     public void whenUpdate() {
         String value = String.valueOf(System.currentTimeMillis());
         Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
-        accidentRepository.add(accident);
+        accidentDefaultRepository.add(accident);
         accident.setName(accident.getName() + "_updated");
-        boolean success = accidentRepository.update(accident);
-        Accident accidentInRepository = accidentRepository.findById(accident.getId())
+        boolean success = accidentDefaultRepository.update(accident);
+        Accident accidentInRepository = accidentDefaultRepository.findById(accident.getId())
                 .orElse(new Accident());
         assertThat(success).isTrue();
         assertThat(accidentInRepository).isEqualTo(accident);
@@ -59,10 +59,10 @@ public class AccidentMemRepositoryTest {
     public void whenDelete() {
         String value = String.valueOf(System.currentTimeMillis());
         Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
-        accidentRepository.add(accident);
+        accidentDefaultRepository.add(accident);
         int accidentId = accident.getId();
-        boolean success = accidentRepository.delete(accident);
-        Optional<Accident> accidentInRepository = accidentRepository.findById(accidentId);
+        boolean success = accidentDefaultRepository.delete(accident);
+        Optional<Accident> accidentInRepository = accidentDefaultRepository.findById(accidentId);
         assertThat(success).isTrue();
         assertThat(accidentInRepository).isEmpty();
     }
@@ -71,10 +71,10 @@ public class AccidentMemRepositoryTest {
     public void whenById() {
         String value = String.valueOf(System.currentTimeMillis());
         Accident accident = new Accident(0, value, value, value, new AccidentType(0, value), new HashSet<>());
-        accidentRepository.add(accident);
+        accidentDefaultRepository.add(accident);
         int accidentId = accident.getId();
-        boolean success = accidentRepository.delete(accidentId);
-        Optional<Accident> accidentInRepository = accidentRepository.findById(accidentId);
+        boolean success = accidentDefaultRepository.delete(accidentId);
+        Optional<Accident> accidentInRepository = accidentDefaultRepository.findById(accidentId);
         assertThat(success).isTrue();
         assertThat(accidentInRepository).isEmpty();
     }

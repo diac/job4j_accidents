@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
-public class AccidentTypeMemRepository implements AccidentTypeRepository {
+public class AccidentTypeMemRepository implements AccidentTypeDefaultRepository {
 
     private final AtomicInteger autoIncrement;
     private final Map<Integer, AccidentType> store = new ConcurrentHashMap<>();
