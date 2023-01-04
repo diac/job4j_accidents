@@ -12,4 +12,5 @@
     <include file="scripts/005_ddl_create_table_rule.sql" relativeToChangelogFile="true"/>
     <include file="scripts/006_dml_insert_rules.sql" relativeToChangelogFile="true"/>
     <include file="scripts/007_ddl_create_table_accidents_rules.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/008_ddl_security_schema.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
