@@ -3,11 +3,8 @@
 <head th:replace="fragments/head :: htmlHead"></head>
 <body>
 <div class="container">
-    <h1>Авторизация</h1>
-    <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
-        <span th:text="${errorMessage}"></span>
-    </div>
-    <form th:action="@{/login}" method="post">
+    <h1>Регистрация</h1>
+    <form th:action="@{/registration}" method="post">
         <div class="form-group">
             <input type="text" class="form-control" id="username" name="username">
             <label for="username">Логин</label>
@@ -16,10 +13,7 @@
             <input type="password" class="form-control" id="password" name="password">
             <label for="password">Пароль</label>
         </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-success">Войти</button>
-            <a href="/registration" class="btn btn-link">Регистрация</a>
-        </div>
+        <button type="submit" class="btn btn-success">Зарегистрироваться</button>
     </form>
 </div>
 </body>
