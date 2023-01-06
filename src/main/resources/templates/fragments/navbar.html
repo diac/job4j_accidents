@@ -10,7 +10,10 @@
                 <a class="nav-item nav-link" th:href="@{/}">Главная</a>
                 <a class="nav-item nav-link" th:href="@{/accidents}">Инциденты</a>
                 <a class="nav-item nav-link" th:href="@{/addAccident}">Добавить Инцидент</a>
-                <a href="#" class="nav-item nav-link">
+                <a
+                        href="#"
+                        class="nav-item nav-link"
+                >
                     <span th:text="${user.username}"></span>
                 </a>
                 <a class="nav-item nav-link" href="/logout">Выйти</a>
