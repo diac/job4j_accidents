@@ -4,9 +4,11 @@
 <body>
 <div class="container">
     <h1>Авторизация</h1>
-    <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
-        <span th:text="${errorMessage}"></span>
-    </div>
+    <div
+            th:if="${errorMessage != null}"
+            th:text="${errorMessage}"
+            class="alert alert-danger"
+    ></div>
     <form th:action="@{/login}" method="post">
         <div class="form-group">
             <input type="text" class="form-control" id="username" name="username">

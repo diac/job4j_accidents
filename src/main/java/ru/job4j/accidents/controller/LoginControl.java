@@ -26,7 +26,9 @@ public class LoginControl {
         if (logout != null) {
             errorMessage = "You have been successfully logged out";
         }
-        model.addAttribute("errorMessage", errorMessage);
+        if (errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
         return "login";
     }
 
